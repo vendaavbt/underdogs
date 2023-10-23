@@ -1,2 +1,1 @@
-# underdogs
-GROUPE : GILAIN + GUIGNET + PASSEDOUET + RABIER
+# projet-examen-m1
