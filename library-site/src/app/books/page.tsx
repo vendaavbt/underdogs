@@ -2,6 +2,7 @@
 
 import { FC, ReactElement, useEffect } from 'react';
 import { useBooksProviders } from '@/hooks';
+import Breadcrumb from 'src/app/Breadcrumb';
 
 const BooksPage: FC = (): ReactElement => {
   const { useListBooks } = useBooksProviders();
@@ -20,3 +21,7 @@ const BooksPage: FC = (): ReactElement => {
 };
 
 export default BooksPage;
+const breadcrumbItems = [
+  { label: 'Accueil', path: '/' },
+  { label: 'Livres', path: '/books/page' },
+];
