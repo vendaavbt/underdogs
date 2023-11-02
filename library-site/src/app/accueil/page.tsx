@@ -11,7 +11,7 @@ const Accueil: FC = () => {
     <>
       <Menu /> 
       <div className="text-center">
-        <p className="text-xl font-semibold">Page d'Accueil</p>
+        <p className="text-xl font-semibold">Page d'accueil</p>
       </div>
      
     </>
