@@ -27,12 +27,6 @@ const BooksPage: FC = (): ReactElement => {
 export default BooksPage;
 
 
-
-
-
-
-
-
 const breadcrumbItems = [
   { label: 'Accueil', path: '/' },
   { label: 'Livres', path: '/books/page' },
