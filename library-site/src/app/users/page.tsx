@@ -61,7 +61,7 @@ const UserPage: FC = () => {
             .map((user) => (
               <Link legacyBehavior key={user.id} href={`/users/${user.id}`}>
                 <a>
-                  <div className="bg-gray-500 text-white rounded-md w-1/16 p-2">
+                  <div className="bg-gray-300 text-black rounded-md w-1/16 p-2">
                     <p className="text-lg">
                       ID:
                       {user.id}
