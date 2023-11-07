@@ -20,7 +20,6 @@ const UserPage: FC = () => {
   const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedBook(e.target.value);
   };
-
   return (
     <>
       <Menu />
