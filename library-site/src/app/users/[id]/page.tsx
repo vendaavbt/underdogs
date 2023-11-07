@@ -2,14 +2,14 @@
 
 import { useParams } from 'next/navigation';
 import { FC } from 'react';
-import Menu from  'src/app/page';
+import Menu from  '../../page';
 
 const UserDetailsPage: FC = () => {
   const { id } = useParams();
 
   return (
     <>
-      <Menu /> 
+      <Menu />
       <div className="text-center">
         <p className="text-xl font-semibold">Page des utilisateurs</p>
       </div>
