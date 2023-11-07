@@ -10,7 +10,7 @@ export class PlainBookPresenter {
 
   writtenOn: Date;
 
-  author: PlainAuthorPresenter;
+  author?: PlainAuthorPresenter;
 
   genres: string[];
 
@@ -24,7 +24,7 @@ export class PlainBookPresenter {
       name: data.name,
       genres: data.genres,
       writtenOn: data.writtenOn,
-      author: PlainAuthorPresenter.from(data.author),
+      author: data.author,
     });
   }
 }

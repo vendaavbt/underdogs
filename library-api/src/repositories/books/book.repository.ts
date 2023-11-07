@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundError } from 'library-api/src/common/errors';
-import { Author, Book, BookId } from 'library-api/src/entities';
+import { Book, BookId } from 'library-api/src/entities';
 import { v4 } from 'uuid';
 import {
   BookRepositoryOutput,
@@ -54,7 +54,7 @@ export class BookRepository extends Repository<Book> {
     newBook.id = v4();
     newBook.name = input.name;
     newBook.writtenOn = input.writtenOn;
-    newBook.author = new Author();
+    newBook.author = null;
     newBook.bookGenres = [];
     await this.save(newBook);
     return adaptBookEntityToBookModel(newBook);

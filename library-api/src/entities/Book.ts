@@ -24,7 +24,7 @@ export class Book extends BaseEntity {
   writtenOn: Date;
 
   @ManyToOne(() => Author, (author) => author.books, { onDelete: 'CASCADE' })
-  author: Author;
+  author?: Author;
 
   @OneToMany(() => BookGenre, (bookGenre) => bookGenre.book)
   bookGenres: BookGenre[];
