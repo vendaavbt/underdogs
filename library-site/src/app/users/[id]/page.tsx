@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 import React, { FC, useState } from 'react';
 import Menu from 'src/app/page';
+import ConfirmationModale from 'src/app/ConfirmationModale';
 
 const users = [
   { id: 1, firstName: 'Matthieu', lastName: 'Gildeux', books: [] },
@@ -15,10 +16,13 @@ const users = [
 
 const UserDetailsPage: FC = () => {
   const { id } = useParams();
-  const user = users.find((u) => u.id === parseInt(id, 10));
+  const userIndex = users.findIndex((u) => u.id === parseInt(id, 10));
+  const user = users[userIndex];
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBook, setSelectedBook] = useState('');
   const [newBook, setNewBook] = useState('');
+  const [isConfirmationModaleOpen, setIsConfirmationModaleOpen] =
+    useState(false); // État pour gérer l'ouverture de la modale
 
   const handleAddBook = () => {
     if (newBook.trim() !== '') {
@@ -27,11 +31,20 @@ const UserDetailsPage: FC = () => {
     }
   };
 
-  const handleRemoveBook = (book) => {
-    const bookIndex = user.books.indexOf(book);
-    if (bookIndex !== -1) {
-      user.books.splice(bookIndex, 1);
+  const handleRemoveUser = () => {
+    setIsConfirmationModaleOpen(true); // Ouvrir la modale de confirmation
+  };
+
+  const confirmRemoveUser = () => {
+    if (userIndex !== -1) {
+      users.splice(userIndex, 1);
+      setIsConfirmationModaleOpen(false); // Fermer la modale de confirmation
+      // Redirigez l'utilisateur vers une autre page après la suppression si nécessaire
     }
+  };
+
+  const cancelRemoveUser = () => {
+    setIsConfirmationModaleOpen(false); // Annuler la suppression et fermer la modale
   };
 
   return (
@@ -41,29 +54,30 @@ const UserDetailsPage: FC = () => {
       <div className="text-center">
         <p className="text-xl font-semibold">Détails de l'utilisateur</p>
       </div>
+
+
       {user ? (
         <div>
-          <p>
-            ID :
-            {user.id}
-          </p>
-          <p>
-            Nom :
-            {user.firstName}
-          </p>
-          <p>
-            Prénom :
-            {user.lastName}
-          </p>
-          <p>Livres :</p>
-          <ul>
-            {user.books.map((book) => (
-              <li key={book}>{book}</li>
-            ))}
-          </ul>
           <div className="mt-4">
-            {' '}
-            {/* Ajoutez une classe pour la marge supérieure */}
+            <p>
+              ID:
+              {user.id}
+            </p>
+            <p>
+              Nom:
+                {user.firstName}
+            </p>
+            <p>
+              Prénom:
+              {user.lastName}
+            </p>
+            <p>Livres :</p>
+            <ul>
+              {user.books.map((book) => (
+                  <li key={book}>{book}</li>
+              ))}
+            </ul>
+
             <input
               type="text"
               placeholder="Ajouter un nouveau livre"
@@ -78,10 +92,24 @@ const UserDetailsPage: FC = () => {
               Ajouter
             </button>
           </div>
+          <div className="mt-12">
+            <button
+              onClick={handleRemoveUser}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg"
+            >
+              Supprimer l'utilisateur
+            </button>
+          </div>
         </div>
       ) : (
         <p>L'utilisateur avec l'ID{id} n'a pas été trouvé.</p>
       )}
+
+      <ConfirmationModale
+        isOpen={isConfirmationModaleOpen}
+        onCancel={cancelRemoveUser}
+        onConfirm={confirmRemoveUser}
+      />
     </>
   );
 };
