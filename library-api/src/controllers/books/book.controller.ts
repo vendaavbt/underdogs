@@ -25,7 +25,7 @@ export class BookController {
     return BookPresenter.from(book);
   }
 
-  @Post('/create')
+  @Post()
   public async createBook(
     @Body() input: createBookUseCaseInput,
   ): Promise<BookPresenter> {

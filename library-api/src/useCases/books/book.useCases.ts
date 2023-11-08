@@ -40,13 +40,7 @@ export class BookUseCases {
     const createdBook = await this.bookRepository.createBook(input);
     return createdBook;
   }
-
-  /**
-   * Delete a Book from database
-   * @param id Book's ID
-   * @throws
-   */
-  public async deleteById(id: BookId): Promise<void> {
+  public async deleteById(id: BookId): Promise<void>{
     await this.bookRepository.deleteById(id);
   }
 }
