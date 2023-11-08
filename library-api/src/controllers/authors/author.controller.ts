@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
 import { PlainAuthorPresenter } from 'library-api/src/controllers/authors/author.presenter';
 import { AuthorId } from 'library-api/src/entities';
 import { AuthorUseCases } from 'library-api/src/useCases';
@@ -30,5 +30,10 @@ export class AuthorController {
   ): Promise<PlainAuthorPresenter> {
     const createdAuthor = await this.authorUseCases.createAuthor(input);
     return PlainAuthorPresenter.from(createdAuthor);
+  }
+
+  @Delete('/:id')
+  public async deleteById(@Param('id') id: AuthorId): Promise<void> {
+    await this.authorUseCases.deleteById(id);
   }
 }

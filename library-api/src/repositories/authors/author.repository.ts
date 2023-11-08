@@ -52,4 +52,12 @@ export class AuthorRepository extends Repository<Author> {
     await this.save(newAuthor);
     return adaptAuthorEntityToPlainAuthorModel(newAuthor);
   }
+
+  /**
+   * Delete an Author from database
+   * @param id Author's ID
+   */
+  public async deleteById(id: AuthorId): Promise<void> {
+    await this.delete({ id });
+  }
 }

@@ -39,4 +39,13 @@ export class AuthorUseCases {
     const createdAuthor = await this.authorRepository.createAuthor(input);
     return createdAuthor;
   }
+
+  /**
+   * Delete a Book from database
+   * @param id Book's ID
+   * @throws
+   */
+  public async deleteById(id: AuthorId): Promise<void> {
+    await this.authorRepository.deleteById(id);
+  }
 }
