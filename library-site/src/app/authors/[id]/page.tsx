@@ -1,31 +1,128 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Menu from 'src/app/page';
-import { useParams } from 'react-router-dom';
+import ConfirmationModale from 'src/app/ConfirmationModale';
 
-const getAuthorById = (id: number) =>
-  // Remplacez cette partie par la logique de récupération des données depuis un backend
-  ({
-    id,
-    name: 'Auteur 1',
-    photo: 'lien_vers_photo_1.jpg',
-    booksCount: 5,
-  });
+const authors = [
+  {
+    id: 1,
+    firstName: 'Alexandre',
+    lastName: 'Dumas',
+    books: [],
+    nbr: '80',
+  },
+  {
+    id: 2,
+    firstName: 'Albert',
+    lastName: 'Camus',
+    books: [],
+    nbr: '30',
+  },
+  {
+    id: 3,
+    firstName: 'Charles',
+    lastName: 'Dickens',
+    books: [],
+    nbr: '34',
+  },
+  {
+    id: 4,
+    firstName: 'Marcel',
+    lastName: 'Proust',
+    books: [],
+    nbr: '1',
+  },
+];
 
-const AuthorDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const authorId = parseInt(id, 10);
-  const author = getAuthorById(authorId);
+const AuthorDetailsPage: FC = () => {
+  const { id } = useParams();
+  const authorIndex = authors.findIndex((u) => u.id === parseInt(id, 10));
+  const author = authors[authorIndex];
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedBook, setSelectedBook] = useState('');
+  const [newBook, setNewBook] = useState('');
+  const [isConfirmationModaleOpen, setIsConfirmationModaleOpen] =
+    useState(false); // État pour gérer l'ouverture de la modale
+
+  const handleAddBook = () => {
+    if (newBook.trim() !== '') {
+      author.books.push(newBook);
+      setNewBook('');
+    }
+  };
+
+  const handleRemoveAuthor = () => {
+    setIsConfirmationModaleOpen(true); // Ouvrir la modale de confirmation
+  };
+
+  const confirmRemoveAuthor = () => {
+    if (authorIndex !== -1) {
+      authors.splice(authorIndex, 1);
+      setIsConfirmationModaleOpen(false); // Fermer la modale de confirmation
+      // Redirigez l'utilisateur vers une autre page après la suppression si nécessaire
+    }
+  };
+
+  const cancelRemoveAuthor = () => {
+    setIsConfirmationModaleOpen(false); // Annuler la suppression et fermer la modale
+  };
 
   return (
-    <div>
-      <h1>{author.name}</h1>
-      <img src={author.photo} alt={author.name} />
-      <p>Nombre de livres :{author.booksCount}</p>
-    </div>
+    <>
+      <Menu />
+      <div className="mt-32" />
+      <div className="text-center">
+        <p className="text-xl font-semibold">Détails de l'auteur</p>
+      </div>
+
+      {author ? (
+        <div>
+          <div className="mt-4">
+            <p>
+              ID:
+              {author.id}
+            </p>
+            <p>
+              Nom:
+              {author.firstName}
+            </p>
+            <p>
+              Prénom:
+              {author.lastName}
+            </p>
+            <p>
+              Nombre de livres:
+              {author.nbr}
+            </p>
+            <p>Livres :</p>
+            <ul>
+              {author.books.map((book) => (
+                <li key={book}>{book}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-12">
+            <button
+              onClick={handleRemoveAuthor}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg"
+            >
+              Supprimer l'auteur
+            </button>
+          </div>
+        </div>
+      ) : (
+        <p>L'auteur avec l'ID{id} n'a pas été trouvé.</p>
+      )}
+
+      <ConfirmationModale
+        isOpen={isConfirmationModaleOpen}
+        onCancel={cancelRemoveAuthor}
+        onConfirm={confirmRemoveAuthor}
+      />
+    </>
   );
 };
 
-export default AuthorDetails;
+export default AuthorDetailsPage;
