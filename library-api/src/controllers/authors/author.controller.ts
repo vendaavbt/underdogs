@@ -1,6 +1,14 @@
-import { Controller, Get, Param, Post, Body, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { PlainAuthorPresenter } from 'library-api/src/controllers/authors/author.presenter';
-import { AuthorId } from 'library-api/src/entities';
+import { Author, AuthorId } from 'library-api/src/entities';
 import { AuthorUseCases } from 'library-api/src/useCases';
 import { createAuthorUseCaseInput } from 'library-api/src/useCases/authors/author.useCases.type';
 
@@ -35,5 +43,13 @@ export class AuthorController {
   @Delete('/:id')
   public async deleteById(@Param('id') id: AuthorId): Promise<void> {
     await this.authorUseCases.deleteById(id);
+  }
+
+  @Patch('/:id')
+  public async updateById(
+    @Param('id') id: AuthorId,
+    @Body() input: Partial<Author>,
+  ): Promise<PlainAuthorPresenter> {
+    return this.authorUseCases.updateById(id, input);
   }
 }

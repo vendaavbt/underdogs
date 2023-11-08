@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AuthorId } from 'library-api/src/entities';
+import { Author, AuthorId } from 'library-api/src/entities';
 import { AuthorRepository } from 'library-api/src/repositories';
+import { adaptAuthorEntityToPlainAuthorModel } from 'library-api/src/repositories/authors/author.utils';
 import {
   PlainAuthorUseCasesOutput,
   createAuthorUseCaseInput,
@@ -47,5 +48,21 @@ export class AuthorUseCases {
    */
   public async deleteById(id: AuthorId): Promise<void> {
     await this.authorRepository.deleteById(id);
+  }
+
+  public async updateById(
+    id: AuthorId,
+    updatedAuthorData: Partial<Author>,
+  ): Promise<PlainAuthorUseCasesOutput> {
+    const updatedAuthor = await this.authorRepository.updateById(
+      id,
+      updatedAuthorData,
+    );
+
+    if (updatedAuthor) {
+      return adaptAuthorEntityToPlainAuthorModel(updatedAuthor);
+    }
+
+    return undefined; // Gérer le cas où l'auteur n'a pas été trouvé ou la mise à jour a échoué
   }
 }

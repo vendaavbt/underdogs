@@ -60,4 +60,17 @@ export class AuthorRepository extends Repository<Author> {
   public async deleteById(id: AuthorId): Promise<void> {
     await this.delete({ id });
   }
+
+  public async updateById(
+    id: AuthorId,
+    updatedAuthorData: Partial<Author>,
+  ): Promise<Author> {
+    const author = await this.findOne({ where: { id } });
+    if (!author) {
+      return undefined;
+    }
+    Object.assign(author, updatedAuthorData);
+    await this.save(author);
+    return author;
+  }
 }
