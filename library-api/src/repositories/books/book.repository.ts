@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundError } from 'library-api/src/common/errors';
 import { Book, BookId } from 'library-api/src/entities';
+import { v4 } from 'uuid';
 import {
   BookRepositoryOutput,
   PlainBookRepositoryOutput,
+  createBookRepositoryInput,
 } from 'library-api/src/repositories/books/book.repository.type';
 import {
   adaptBookEntityToBookModel,
@@ -43,5 +45,26 @@ export class BookRepository extends Repository<Book> {
     }
 
     return adaptBookEntityToBookModel(book);
+  }
+
+  public async createBook(
+    input: createBookRepositoryInput,
+  ): Promise<BookRepositoryOutput> {
+    const newBook = new Book();
+    newBook.id = v4();
+    newBook.name = input.name;
+    newBook.writtenOn = input.writtenOn;
+    newBook.author = null;
+    newBook.bookGenres = [];
+    await this.save(newBook);
+    return adaptBookEntityToBookModel(newBook);
+  }
+
+  /**
+   * Delete a Book from database
+   * @param id Book's ID
+   */
+  public async deleteById(id: BookId): Promise<void> {
+    await this.delete({ id });
   }
 }
