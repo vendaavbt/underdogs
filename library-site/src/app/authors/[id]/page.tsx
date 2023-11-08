@@ -10,28 +10,28 @@ const authors = [
     id: 1,
     firstName: 'Alexandre',
     lastName: 'Dumas',
-    books: [],
+    books: ['Le Comte de Monte-Cristo', 'Les Trois Mousquetaires'],
     nbr: '80',
   },
   {
     id: 2,
     firstName: 'Albert',
     lastName: 'Camus',
-    books: [],
+    books: ['La Chute', 'La Peste'],
     nbr: '30',
   },
   {
     id: 3,
     firstName: 'Charles',
     lastName: 'Dickens',
-    books: [],
+    books: ['Oliver Twist', 'David Copperfield'],
     nbr: '34',
   },
   {
     id: 4,
     firstName: 'Marcel',
     lastName: 'Proust',
-    books: [],
+    books: ['Le Temps Retrouvé', 'Albertine Disparue'],
     nbr: '1',
   },
 ];
@@ -46,17 +46,26 @@ const AuthorDetailsPage: FC = () => {
   const [isConfirmationModaleOpen, setIsConfirmationModaleOpen] =
     useState(false); // État pour gérer l'ouverture de la modale
 
+
+  // Ajout et suppresion de livres
   const handleAddBook = () => {
     if (newBook.trim() !== '') {
       author.books.push(newBook);
       setNewBook('');
     }
   };
+  const handleRemoveBook = (bookName: string) => {
+    const bookIndex = author.books.findIndex((book) => book === bookName);
+    if (bookIndex !== -1) {
+      author.books.splice(bookIndex, 1);
+    }
+  };
 
+
+    // Ajout et suppresion d'auteurs
   const handleRemoveAuthor = () => {
     setIsConfirmationModaleOpen(true); // Ouvrir la modale de confirmation
   };
-
   const confirmRemoveAuthor = () => {
     if (authorIndex !== -1) {
       authors.splice(authorIndex, 1);
@@ -64,14 +73,16 @@ const AuthorDetailsPage: FC = () => {
       // Redirigez l'utilisateur vers une autre page après la suppression si nécessaire
     }
   };
-
   const cancelRemoveAuthor = () => {
     setIsConfirmationModaleOpen(false); // Annuler la suppression et fermer la modale
   };
 
+
+  // Main script
   return (
     <>
       <Menu />
+
       <div className="mt-32" />
       <div className="text-center">
         <p className="text-xl font-semibold">Détails de l'auteur</p>
@@ -97,12 +108,23 @@ const AuthorDetailsPage: FC = () => {
               {author.nbr}
             </p>
             <p>Livres :</p>
+            {author.books.map((book, index) => (
+              <li key={index}>{book}</li>
+            ))}
             <ul>
               {author.books.map((book) => (
-                <li key={book}>{book}</li>
+                <li key={book}>
+                  {book}{' '}
+                  <button onClick={() => handleRemoveBook(book)}
+                          className="bg-red-500 text-white px-2 py-2 rounded-lg"
+                  >
+                    Supprimer
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
+
           <div className="mt-12">
             <button
               onClick={handleRemoveAuthor}
@@ -110,11 +132,27 @@ const AuthorDetailsPage: FC = () => {
             >
               Supprimer l'auteur
             </button>
+
+            <div>
+              <input
+                type="text"
+                placeholder="Nouveau livre"
+                value={newBook}
+                onChange={(e) => setNewBook(e.target.value)}
+              />
+              <button onClick={handleAddBook}>Ajouter un livre</button>
+            </div>
           </div>
         </div>
       ) : (
-        <p>L'auteur avec l'ID{id} n'a pas été trouvé.</p>
+        <p>
+L'auteur avec l'ID{id}
+{' '}
+n'a pas été trouvé.
+</p>
       )}
+
+
 
       <ConfirmationModale
         isOpen={isConfirmationModaleOpen}

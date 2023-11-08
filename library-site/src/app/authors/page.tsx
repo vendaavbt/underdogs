@@ -16,6 +16,7 @@ const AuthorPage: FC = () => {
     const [selectednbr, setSelectednbr] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
     const [newAuthor, setNewAuthor] = useState({ firstName: '', lastName: '', nbr: '' });
+    const [selectedAuthor, setSelectedAuthor] = useState<Author | null>(null);
 
     const handlenbrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectednbr(e.target.value);
@@ -32,6 +33,10 @@ const AuthorPage: FC = () => {
         setNewAuthor({ firstName: '', lastName: '', nbr: '' });
         setModalOpen(false);
     };
+    const handleShowAuthorDetails = (author: Author) => {
+        setSelectedAuthor(author);
+    };
+
 
     return (
         <>
