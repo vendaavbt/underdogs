@@ -30,11 +30,11 @@ export class PlainBookPresenter {
 }
 
 export class BookPresenter {
-  id: string;
+  id: BookId;
 
   name: string;
 
-  author: PlainAuthorPresenter;
+  author?: PlainAuthorPresenter;
 
   writtenOn: Date;
 
@@ -49,8 +49,8 @@ export class BookPresenter {
       id: data.id,
       name: data.name,
       writtenOn: data.writtenOn,
-      author: PlainAuthorPresenter.from(data.author),
-      genres: data.genres.map(GenrePresenter.from),
+      author: data.author,
+      genres: data.genres,
     });
   }
 }
