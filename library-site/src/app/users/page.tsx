@@ -90,7 +90,7 @@ const UserPage: FC = () => {
 
 export default UserPage;
 
-const breadcrumbItems = [
-  { label: 'Accueil', path: '/' },
-  { label: 'Utilisateurs', path: '/users' },
-];
+//const breadcrumbItems = [
+ // { label: 'Accueil', path: '/' },
+  //{ label: 'Utilisateurs', path: '/users' },
+// ];

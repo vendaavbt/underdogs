@@ -6,12 +6,48 @@ import Menu from 'src/app/page';
 import ConfirmationModale from 'src/app/ConfirmationModale';
 
 const users = [
-  { id: 1, firstName: 'Matthieu', lastName: 'Gildeux', books: [] },
-  { id: 2, firstName: 'Matteo', lastName: 'Guignol', books: [] },
-  { id: 3, firstName: 'Arthur', lastName: 'Pasdoué', books: [] },
-  { id: 4, firstName: 'Mateo', lastName: 'Papier', books: [] },
-  { id: 5, firstName: 'Baptiste', lastName: 'Dehonte', books: [] },
-  { id: 6, firstName: 'Edouard', lastName: 'Mourant', books: [] },
+  {
+    id: 1,
+    firstName: 'Matthieu',
+    lastName: 'Gildeux',
+    books: [],
+    favoriteBook: [],
+  },
+  {
+    id: 2,
+    firstName: 'Matteo',
+    lastName: 'Guignol',
+    books: [],
+    favoriteBook: [],
+  },
+  {
+    id: 3,
+    firstName: 'Arthur',
+    lastName: 'Pasdoué',
+    books: [],
+    favoriteBook: [],
+  },
+  {
+    id: 4,
+    firstName: 'Mateo',
+    lastName: 'Papier',
+    books: [],
+    favoriteBook: [],
+  },
+  {
+    id: 5,
+    firstName: 'Baptiste',
+    lastName: 'Dehonte',
+    books: [],
+    favoriteBook: [],
+  },
+  {
+    id: 6,
+    firstName: 'Edouard',
+    lastName: 'Mourant',
+    books: [],
+    favoriteBook: [],
+  },
 ];
 
 const UserDetailsPage: FC = () => {
@@ -30,6 +66,7 @@ const UserDetailsPage: FC = () => {
       setNewBook('');
     }
   };
+
 
   const handleRemoveUser = () => {
     setIsConfirmationModaleOpen(true); // Ouvrir la modale de confirmation
@@ -55,7 +92,6 @@ const UserDetailsPage: FC = () => {
         <p className="text-xl font-semibold">Détails de l'utilisateur</p>
       </div>
 
-
       {user ? (
         <div>
           <div className="mt-4">
@@ -65,7 +101,7 @@ const UserDetailsPage: FC = () => {
             </p>
             <p>
               Nom:
-                {user.firstName}
+              {user.firstName}
             </p>
             <p>
               Prénom:
@@ -74,9 +110,10 @@ const UserDetailsPage: FC = () => {
             <p>Livres :</p>
             <ul>
               {user.books.map((book) => (
-                  <li key={book}>{book}</li>
+                <li key={book}>{book}</li>
               ))}
             </ul>
+
 
             <input
               type="text"
@@ -91,6 +128,9 @@ const UserDetailsPage: FC = () => {
             >
               Ajouter
             </button>
+
+
+
           </div>
           <div className="mt-12">
             <button
@@ -102,7 +142,11 @@ const UserDetailsPage: FC = () => {
           </div>
         </div>
       ) : (
-        <p>L'utilisateur avec l'ID{id} n'a pas été trouvé.</p>
+        <p>
+L'utilisateur avec l'ID{id}
+{' '}
+n'a pas été trouvé.
+</p>
       )}
 
       <ConfirmationModale
