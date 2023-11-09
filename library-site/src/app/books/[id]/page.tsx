@@ -2,6 +2,7 @@
 
 import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
+import Menu from 'src/app/page';
 import { PlainBookModel } from '@/models/book.model';
 
 const BookDetailsPage: FC = () => {
@@ -66,6 +67,9 @@ const BookDetailsPage: FC = () => {
   if (!book) return <p>Le livre n'a pas été trouvé.</p>;
 
   return (
+    <>
+    <Menu />
+    <div className="mt-32">
     <div>
       <h1>Détails du livre</h1>
       <div>
@@ -78,6 +82,8 @@ const BookDetailsPage: FC = () => {
       {/* Utilisez window.location pour la navigation */}
       <button onClick={() => (window.location.href = '/books')}>Retour à la liste des livres</button>
     </div>
+    </div>
+    </>
   );
 };
 

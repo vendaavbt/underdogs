@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import Menu from 'src/app/page';
 import { useBooksProviders } from '@/hooks';
 import Link from 'next/link';
 
@@ -45,6 +46,8 @@ const BooksPage = () => {
 
   return (
     <>
+    <Menu />
+    <div className="mt-32">
       <h1>Books</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -90,6 +93,7 @@ const BooksPage = () => {
             | Written on: {book.writtenOn}</p><br></br>
           </div>
         ))}
+      </div>
       </div>
     </>
   );
