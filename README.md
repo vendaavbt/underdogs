@@ -20,7 +20,7 @@ se présenter de la même manière)
 
 **- Page bibliothèque :**
 1. Je vois la liste de mes livres
-a. Je peux voir le nom, les genres, la date d’écriture et l’auteur de chaque livre.
+a. Je peux voir le nom, la date d’écriture de chaque livre.
 2. J’ai une barre de recherche me permettant de filtrer les livres par titre.
 5. Je peux ouvrir une modale me permettant de créer un nouveau livre.
 
@@ -35,8 +35,7 @@ ne se fasse réellement.
 1. Je vois la liste des utilisateurs
 a. Je vois leur nom et leur prénom.
 2. J’ai une barre de recherche me permettant de la filtrer par nom.
-3. Je peux filtrer par un ou plusieurs livres pour que seuls les utilisateurs possédant un
-certain livre apparaisse.
+
 
 **-Utilisateurs :**
 1. Je peux avoir des utilisateurs dans mon application.
@@ -44,8 +43,6 @@ certain livre apparaisse.
    
 **- Page profil :**
 1. Quand je clique sur un utilisateur dans la liste, j’arrive sur sa page de détails.
-2. L’utilisateur peut avoir une liste de livre qu’il possède.
-a. Je peux en ajouter.
 6. Je peux supprimer cet utilisateur. J’ai une modale me permettant d’annuler ou de
 supprimer mon choix.
 
