@@ -1,6 +1,5 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { FC } from 'react';
 import Menu from '@/app/page';
 

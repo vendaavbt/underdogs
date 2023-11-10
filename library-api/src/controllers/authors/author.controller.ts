@@ -28,6 +28,10 @@ export class AuthorController {
     @Param('id') id: AuthorId,
   ): Promise<PlainAuthorPresenter> {
     const author = await this.authorUseCases.getById(id);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1899d842b5306b61cd5f8df2a06348c49247bb1d
     return PlainAuthorPresenter.from(author);
   }
 
