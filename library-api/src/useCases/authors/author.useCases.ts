@@ -42,8 +42,8 @@ export class AuthorUseCases {
   }
 
   /**
-   * Delete a Book from database
-   * @param id Book's ID
+   * Delete an Author from database
+   * @param id Author's ID
    * @throws
    */
   public async deleteById(id: AuthorId): Promise<void> {
