@@ -20,20 +20,20 @@ se présenter de la même manière)
 
 **- Page bibliothèque :**
 1. Je vois la liste de mes livres
-  a. Je peux voir le nom, les genres, la date d’écriture et l’auteur de chaque livre.
+a. Je peux voir le nom, les genres, la date d’écriture et l’auteur de chaque livre.
 2. J’ai une barre de recherche me permettant de filtrer les livres par titre.
 5. Je peux ouvrir une modale me permettant de créer un nouveau livre.
 
  **- Détails d'un livre :**
 1. J’accède à la page de détail d’un livre quand je clique sur l’un dans la liste.
 2. La page de détail contient :
-  b. Les genres du livres
+b. Les genres du livres
 3. Je peux supprimer un livre. J’ai une modale de confirmation avant que l’opération
 ne se fasse réellement.
 
 **- Listes des utilisateurs :**
 1. Je vois la liste des utilisateurs
-  a. Je vois leur nom et leur prénom.
+a. Je vois leur nom et leur prénom.
 2. J’ai une barre de recherche me permettant de la filtrer par nom.
 3. Je peux filtrer par un ou plusieurs livres pour que seuls les utilisateurs possédant un
 certain livre apparaisse.
@@ -41,21 +41,21 @@ certain livre apparaisse.
 **- Page profil :**
 1. Quand je clique sur un utilisateur dans la liste, j’arrive sur sa page de détails.
 2. L’utilisateur peut avoir une liste de livre qu’il possède.
-  a. Je peux en ajouter.
+a. Je peux en ajouter.
 6. Je peux supprimer cet utilisateur. J’ai une modale me permettant d’annuler ou de
 supprimer mon choix.
 
 **- Page auteurs :**
 1. J’ai une page avec la liste des auteurs, pour chaque auteur je vois :
-  a. Son nom.
-  b. Sa photo.
+a. Son nom.
+b. Sa photo.
 2. Je peux filtrer mes auteurs via une barre de recherches
 3. Je peux ajouter un nouvel auteur via une modale.
 
 **- Page détails d'un auteur :**
 1. Je peux cliquer sur un auteur pour aller sur sa page de détails
-  a. Son nom
-  b. Sa photo
+a. Son nom
+b. Sa photo
 2. Je peux modifier les informations d’un auteur
 5. Je peux supprimer un auteur. J’ai une modale me permettant de confirmer ou
 d’annuler mon choix.
