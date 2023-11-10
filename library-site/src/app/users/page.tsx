@@ -92,7 +92,7 @@ const UsersPage = () => {
               type="submit"
               className="border border-black py-2 px-4 text-white bg-black"
             >
-              Ajouter un auteur
+              Ajouter un utilisateur
             </button>
           </form>
         </div>
