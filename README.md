@@ -38,6 +38,10 @@ a. Je vois leur nom et leur prénom.
 3. Je peux filtrer par un ou plusieurs livres pour que seuls les utilisateurs possédant un
 certain livre apparaisse.
 
+**-Utilisateurs :**
+1. Je peux avoir des utilisateurs dans mon application.
+2. Ils ont un ID, un nom et un prénom.
+   
 **- Page profil :**
 1. Quand je clique sur un utilisateur dans la liste, j’arrive sur sa page de détails.
 2. L’utilisateur peut avoir une liste de livre qu’il possède.
@@ -59,11 +63,3 @@ b. Sa photo
 2. Je peux modifier les informations d’un auteur
 5. Je peux supprimer un auteur. J’ai une modale me permettant de confirmer ou
 d’annuler mon choix.
-
-  # 2) Features qui fonctionnent seulement en backend
-
-
-  # 3) Features qui fonctionnent seulement en frontend
-  **-Utilisateurs :**
-1. Je peux avoir des utilisateurs dans mon application.
-2. Ils ont un ID, un nom et un prénom.
