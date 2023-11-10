@@ -1,6 +1,6 @@
   # Bibliothèque des underdogs
 
-Pour commencer nous nous sommes divisés en 2 groupes de 3, un groupe sur le front et l'autre sur le back. Malheureusement, par manque de temps et de talent (d'où le nom underdogs) nous n'avons pas réussi à implémenter toutes les features demandées. Cependant, on est assez fier du chemin qu'on à parcouru et ci-dessous vous trouverez le détail de toutes les features réalisées. 
+Pour commencer nous nous sommes divisés en 2 groupes de 3, un groupe sur le front et l'autre sur le back. Malheureusement, par manque de temps et de talent (d'où le nom underdogs) nous n'avons pas réussi à implémenter toutes les features demandées. Cependant, on est assez fier du chemin qu'on a parcouru et ci-dessous vous trouverez le détail de toutes les features réalisées. 
 
 Concernant les tests à réaliser, nous avons appris qu'on devait en réaliser le dernier jour.. donc nous n'en n'avons malheureusement pas fait. On a ainsi pris la décision de vous rendre le projet en temps et en heure et prendre la pénalité lié à la non-réalisation des tests plutôt que celle due au retard de rendu.
 
