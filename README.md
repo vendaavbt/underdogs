@@ -2,7 +2,7 @@
 
 Pour commencer nous nous sommes divisés en 2 groupes de 3, un groupe sur le front et l'autre sur le back. Malheureusement, par manque de temps et de talent (d'où le nom underdogs) nous avons pas réussi à implémenter toutes les features demandées. Cependant, on est assez fier du chemin qu'on à parcouru et ci-dessous vous trouverez le détail de toutes les features.
 
-  # 1) Features qui fonctionnent comme demandées
+  # 1) Features entièrement fonctionnelles
   
 **- Menu et Layout :**
 1. Implémenter un menu de navigation dans l’application
