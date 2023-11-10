@@ -1,164 +1,175 @@
 'use client';
 
-import { useParams } from 'next/navigation';
-import React, { FC, useState } from 'react';
-import Menu from 'src/app/page';
-import ConfirmationModale from 'src/app/ConfirmationModale';
-
-const authors = [
-  {
-    id: 1,
-    firstName: 'Alexandre',
-    lastName: 'Dumas',
-    books: ['Le Comte de Monte-Cristo', 'Les Trois Mousquetaires'],
-    nbr: '80',
-  },
-  {
-    id: 2,
-    firstName: 'Albert',
-    lastName: 'Camus',
-    books: ['La Chute', 'La Peste'],
-    nbr: '30',
-  },
-  {
-    id: 3,
-    firstName: 'Charles',
-    lastName: 'Dickens',
-    books: ['Oliver Twist', 'David Copperfield'],
-    nbr: '34',
-  },
-  {
-    id: 4,
-    firstName: 'Marcel',
-    lastName: 'Proust',
-    books: ['Le Temps Retrouvé', 'Albertine Disparue'],
-    nbr: '1',
-  },
-];
+import React, { FC, useEffect, useState, ChangeEvent, FormEvent } from 'react';
+import axios from 'axios';
+import Menu from '@/app/page';
+import { PlainAuthorModel } from '@/models/author.model';
 
 const AuthorDetailsPage: FC = () => {
-  const { id } = useParams();
-  const authorIndex = authors.findIndex((u) => u.id === parseInt(id, 10));
-  const author = authors[authorIndex];
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedBook, setSelectedBook] = useState('');
-  const [newBook, setNewBook] = useState('');
-  const [isConfirmationModaleOpen, setIsConfirmationModaleOpen] =
-    useState(false); // État pour gérer l'ouverture de la modale
+  const [author, setAuthor] = useState<PlainAuthorModel | null>(null);
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [editData, setEditData] = useState<Partial<PlainAuthorModel>>({});
 
+  useEffect(() => {
+    const extractIdFromPath = (): string | null => {
+      const parts = window.location.pathname.split('/');
+      return parts[parts.length - 1] || null;
+    };
 
-  // Ajout et suppresion de livres
-  const handleAddBook = () => {
-    if (newBook.trim() !== '') {
-      author.books.push(newBook);
-      setNewBook('');
+    const authorId = extractIdFromPath();
+    if (!authorId) {
+      setError("Aucun ID de auteur trouvé dans l'URL.");
+      return;
+    }
+
+    const fetchAuthorDetails = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/authors/${authorId}`,
+        );
+        setAuthor(response.data);
+        setEditData(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors du chargement des détails de l'auteur:",
+          error,
+        );
+        setError("Erreur lors du chargement des détails de l'auteur.");
+      }
+      setLoading(false);
+    };
+
+    fetchAuthorDetails();
+  }, []);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setEditData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleUpdate = async (event: FormEvent) => {
+    event.preventDefault();
+    const authorId = author?.id;
+    if (!authorId) {
+      setError("Erreur : ID de l'auteur manquant.");
+      return;
+    }
+
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/authors/${authorId}`,
+        editData,
+      );
+      setAuthor(response.data); // Update the author with the new data
+      alert('Auteur mis à jour avec succès.');
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de l'auteur:", error);
+      setError("Erreur lors de la mise à jour de l'auteur.");
     }
   };
-  const handleRemoveBook = (bookName: string) => {
-    const bookIndex = author.books.findIndex((book) => book === bookName);
-    if (bookIndex !== -1) {
-      author.books.splice(bookIndex, 1);
+
+  const handleDelete = async () => {
+    const authorId = author?.id;
+    if (!authorId) return;
+
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer cet auteur ?')) {
+      try {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_API_URL}/authors/${authorId}`,
+        );
+        window.location.href = '/authors';
+      } catch (error) {
+        console.error("Erreur lors de la suppression de l'auteur:", error);
+        setError("Erreur lors de la suppression de l'auteur.");
+      }
     }
   };
 
+  if (isLoading) return <p>Chargement...</p>;
+  if (error) return <p>{error}</p>;
+  if (!author) return <p>L'auteur n'a pas été trouvé.</p>;
 
-    // Ajout et suppresion d'auteurs
-  const handleRemoveAuthor = () => {
-    setIsConfirmationModaleOpen(true); // Ouvrir la modale de confirmation
-  };
-  const confirmRemoveAuthor = () => {
-    if (authorIndex !== -1) {
-      authors.splice(authorIndex, 1);
-      setIsConfirmationModaleOpen(false); // Fermer la modale de confirmation
-      // Redirigez l'utilisateur vers une autre page après la suppression si nécessaire
-    }
-  };
-  const cancelRemoveAuthor = () => {
-    setIsConfirmationModaleOpen(false); // Annuler la suppression et fermer la modale
-  };
-
-
-  // Main script
   return (
     <>
       <Menu />
-
-      <div className="mt-32" />
-      <div className="text-center">
-        <p className="text-xl font-semibold">Détails de l'auteur</p>
-      </div>
-
-      {author ? (
+      <div className="mt-32">
         <div>
-          <div className="mt-4">
-            <p>
-              ID:
-              {author.id}
-            </p>
-            <p>
-              Nom:
-              {author.firstName}
-            </p>
-            <p>
-              Prénom:
-              {author.lastName}
-            </p>
-            <p>
-              Nombre de livres:
-              {author.nbr}
-            </p>
-            <p>Livres :</p>
-            {author.books.map((book, index) => (
-              <li key={index}>{book}</li>
-            ))}
-            <ul>
-              {author.books.map((book) => (
-                <li key={book}>
-                  {book}{' '}
-                  <button onClick={() => handleRemoveBook(book)}
-                          className="bg-red-500 text-white px-2 py-2 rounded-lg"
-                  >
-                    Supprimer
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-12">
-            <button
-              onClick={handleRemoveAuthor}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg"
-            >
-              Supprimer l'auteur
-            </button>
-
-            <div>
-              <input
-                type="text"
-                placeholder="Nouveau livre"
-                value={newBook}
-                onChange={(e) => setNewBook(e.target.value)}
-              />
-              <button onClick={handleAddBook}>Ajouter un livre</button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <p>
-L'auteur avec l'ID{id}
+          <u>
+            <h1>Détails de l'auteur :</h1>
+          </u>
+          <big>
+            <strong>
+              <h2>
+                {author.firstName} {author.lastName}
+              </h2>
+            </strong>
+          </big>
+          <img
+            src={author.photoUrl}
+            alt={`${author.photoUrl}`}
+            className="max-w-xs h-auto"
+          />
 {' '}
-n'a pas été trouvé.
-</p>
-      )}
+          <p>
+            Livres:
+            {author.books}
+          </p>
+          <br />
+          <button onClick={handleDelete} className="border p-0">
+            Supprimer l'auteur
+          </button>
+          <br />
+          <br />
+          <br />
+          <u>
+            <h1>Formulaire pour éditer l'auteur</h1>
+          </u>
+          {author && (
+            <form onSubmit={handleUpdate}>
+              <label>
+                Prénom :
+                <input
+                  type="text"
+                  name="firstName"
+                  value={editData.firstName || ''}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Nom :
+                <input
+                  type="text"
+                  name="lastName"
+                  value={editData.lastName || ''}
+                  onChange={handleChange}
+                />
+              </label>
+              <label>
+                Photo :
+                <input
+                  type="text"
+                  name="photoUrl"
+                  value={editData.photoUrl || ''}
+                  onChange={handleChange}
+                />
+              </label>
 
-
-
-      <ConfirmationModale
-        isOpen={isConfirmationModaleOpen}
-        onCancel={cancelRemoveAuthor}
-        onConfirm={confirmRemoveAuthor}
-      />
+              <button type="submit" className="border p-0">
+                Mettre à jour l'auteur
+              </button>
+            </form>
+          )}
+          <br />
+          <button
+            onClick={() => (window.location.href = '/authors')}
+            className="border p-0"
+          >
+            Retour à la liste des auteurs
+          </button>
+        </div>
+      </div>
     </>
   );
 };

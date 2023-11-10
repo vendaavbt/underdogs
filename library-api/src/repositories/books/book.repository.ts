@@ -60,7 +60,7 @@ export class BookRepository extends Repository<Book> {
     return adaptBookEntityToBookModel(newBook);
   }
 
-  public async deleteById(id: BookId): Promise<void>{
-    await this.delete({id});
+  public async deleteById(id: BookId): Promise<void> {
+    await this.delete({ id });
   }
 }

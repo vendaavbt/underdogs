@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { FC } from 'react';
-import Menu from 'src/app/page';
+import Menu from '@/app/page';
 
 const Accueil: FC = () => (
   <>

@@ -5,4 +5,3 @@ export type PlainBookModel = {
   writtenOn: string;
   bookGenres: string;
 };
-

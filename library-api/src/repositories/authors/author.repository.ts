@@ -49,6 +49,7 @@ export class AuthorRepository extends Repository<Author> {
     newAuthor.firstName = input.firstName;
     newAuthor.lastName = input.lastName;
     newAuthor.photoUrl = input.photoUrl;
+
     await this.save(newAuthor);
     return adaptAuthorEntityToPlainAuthorModel(newAuthor);
   }

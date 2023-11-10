@@ -2,7 +2,7 @@
 
 import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
-import Menu from 'src/app/page';
+import Menu from '@/app/page';
 import { PlainBookModel } from '@/models/book.model';
 
 const BookDetailsPage: FC = () => {
@@ -11,17 +11,14 @@ const BookDetailsPage: FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-
     const extractIdFromPath = (path: string): string | null => {
       const parts = path.split('/');
       return parts[parts.length - 1] || null;
     };
 
     const bookId = extractIdFromPath(window.location.pathname);
-
-
     if (!bookId) {
-      setError('Aucun ID de livre trouvé dans l\'URL.');
+      setError("Aucun ID de livre trouvé dans l'URL.");
       return;
     }
 
@@ -30,14 +27,23 @@ const BookDetailsPage: FC = () => {
       try {
         const bookId = extractIdFromPath(window.location.pathname);
         if (!bookId) {
-          throw new Error('Aucun ID de livre trouvé dans l\'URL.');
+          throw new Error("Aucun ID de livre trouvé dans l'URL.");
         }
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/books/${bookId}`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/books/${bookId}`,
+        );
         setBook(response.data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          console.error('Erreur lors du chargement des détails du livre:', error.response || error.request);
-          setError(`Erreur lors du chargement des détails du livre: ${error.response?.statusText || error.message}`);
+          console.error(
+            'Erreur lors du chargement des détails du livre:',
+            error.response || error.request,
+          );
+          setError(
+            `Erreur lors du chargement des détails du livre: ${
+              error.response?.statusText || error.message
+            }`,
+          );
         } else {
           console.error('Une erreur inattendue est survenue:', error);
           setError('Une erreur inattendue est survenue.');
@@ -45,20 +51,22 @@ const BookDetailsPage: FC = () => {
       }
       setLoading(false);
     };
-    
 
     fetchBookDetails();
   }, []);
 
   const handleDelete = async () => {
     if (!book) return;
-
-    try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/books/${book.id}`);
-      window.location.href = '/books'; 
-    } catch (error) {
-      console.error('Erreur lors de la suppression du livre:', error);
-      setError('Erreur lors de la suppression du livre.');
+    if (window.confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')) {
+      try {
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_API_URL}/books/${book.id}`,
+        );
+        window.location.href = '/books';
+      } catch (error) {
+        console.error('Erreur lors de la suppression du livre:', error);
+        setError('Erreur lors de la suppression du livre.');
+      }
     }
   };
 
@@ -68,21 +76,43 @@ const BookDetailsPage: FC = () => {
 
   return (
     <>
-    <Menu />
-    <div className="mt-32">
-    <div>
-      <h1>Détails du livre</h1>
-      <div>
-        <h2>{book.name}</h2>
-        <p>Auteur: {book.author}</p>
-        <p>Écrit le: {book.writtenOn}</p>
-        <p>Genres: {book.bookGenres}</p>
-        <button onClick={handleDelete}>Supprimer le livre</button>
+      <Menu />
+      <div className="mt-32">
+        <div>
+          <u>
+            <h1>Détails du livre :</h1>
+          </u>
+          <div>
+            <big>
+              <strong>
+                <h2>{book.name}</h2>
+              </strong>
+            </big>
+            <p>
+              Auteur:
+              {book.author}
+            </p>
+            <p>
+              Écrit le:
+              {book.writtenOn}
+            </p>
+            <p>
+              Genres:
+              {book.bookGenres}
+            </p>
+            <button onClick={handleDelete} className="border p-0">
+              Supprimer le livre
+            </button>
+          </div>
+
+          <button
+            onClick={() => (window.location.href = '/books')}
+            className="border p-0"
+          >
+            Retour à la liste des livres
+          </button>
+        </div>
       </div>
-      {/* Utilisez window.location pour la navigation */}
-      <button onClick={() => (window.location.href = '/books')}>Retour à la liste des livres</button>
-    </div>
-    </div>
     </>
   );
 };

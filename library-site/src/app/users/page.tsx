@@ -1,96 +1,125 @@
 'use client';
 
-import React, { FC, useState } from 'react';
-import Menu from 'src/app/page';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import Link from 'next/link';
+import Menu from '@/app/page';
+import { useUsersProviders } from '@/hooks';
 
-const users = [
-  { id: 1, firstName: 'Matthieu', lastName: 'Gildeux' },
-  { id: 2, firstName: 'Matteo', lastName: 'Guignolet' },
-  { id: 3, firstName: 'Arthur', lastName: 'Pasdoué' },
-  { id: 4, firstName: 'Mateo', lastName: 'Papier' },
-  { id: 5, firstName: 'Baptiste', lastName: 'Dehonte' },
-  { id: 6, firstName: 'Edouard', lastName: 'Mourant' },
-];
+const UsersPage = () => {
+  const { useListUsers, useAddUser } = useUsersProviders();
+  const { users, load } = useListUsers();
+  const { addUser } = useAddUser();
 
-const UserPage: FC = () => {
+  const [newUser, setNewUser] = useState({
+    id: '',
+    firstName: '',
+    lastName: '',
+  });
+
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedBook, setSelectedBook] = useState('');
 
-  const handleBookChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedBook(e.target.value);
+  useEffect(() => {
+    load();
+  }, []);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      await addUser(newUser);
+      setNewUser({
+        id: '',
+        firstName: '',
+        lastName: '',
+      });
+      load();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
+  };
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredUsers = users.filter((user) =>
+    `${user.firstName} ${user.lastName}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <>
       <Menu />
       <div className="mt-32">
         <div className="text-center">
+          <br />
           <p className="text-xl font-semibold">Page des utilisateurs</p>
-        </div>
 
-        <input
-          type="text"
-          placeholder="Recherche par nom/prénom"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ color: '#000000' }}
-          className="mt-4"
-        />
-
-        <div className="mt-4">
-          <label />
+          <br />
           <input
             type="text"
-            placeholder="Recherche par livre"
-            value={selectedBook}
-            onChange={handleBookChange}
-            style={{ color: '#000000' }}
+            placeholder="Chercher par nom..."
+            onChange={handleSearchChange}
+            className="border p-1"
           />
         </div>
 
-        <div className="grid grid-cols-16 gap-4">
-          {users
-            .filter((user) => {
-              const fullName = `${user.firstName} ${user.lastName}`;
-              return (
-                fullName.toLowerCase().includes(searchTerm.toLowerCase()) &&
-                (!selectedBook ||
-                  (user.books && user.books.includes(selectedBook)))
-              );
-            })
-            .map((user) => (
-              <Link legacyBehavior key={user.id} href={`/users/${user.id}`}>
-                <a>
-                  <div className="bg-gray-300 text-black rounded-md w-1/16 p-2">
-                    <p className="text-lg">
-                      ID:
-                      {user.id}
-                    </p>
-                    <p className="text-lg">
-                      Nom:
-                      {user.firstName}
-                    </p>
-                    <p className="text-lg">
-                      Prénom:
-                      {user.lastName}
-                    </p>
-                    <p className="text-lg">
-                      Livre(s):{' '}
-                      {user.books ? user.books.join(', ') : 'Aucun livre'}
-                    </p>
-                  </div>
-                </a>
+        <br />
+
+        <form onSubmit={handleSubmit}>
+          <input
+            name="firstName"
+            value={newUser.firstName}
+            onChange={handleChange}
+            placeholder="Prénom"
+            required
+          />
+          <input
+            name="lastName"
+            value={newUser.lastName}
+            onChange={handleChange}
+            placeholder="Nom"
+            required
+          />
+
+          <button type="submit" className="border p-0">
+            Ajouter un auteur
+          </button>
+        </form>
+
+        <div>
+          {filteredUsers.map((user) => (
+            <div key={user.id}>
+              <hr />
+
+              <br />
+              <big>
+                <strong>
+                  <h3>
+                    {user.firstName}
+                    {' '}
+                    {user.lastName}
+                  </h3>
+                </strong>
+              </big>
+              <Link href={`/users/${user.id}`} passHref>
+                <button type="button" className="border p-0">
+                  Details
+                </button>
               </Link>
-            ))}
+              <br />
+              <br />
+            </div>
+          ))}
         </div>
       </div>
     </>
   );
 };
 
-export default UserPage;
-
-//const breadcrumbItems = [
- // { label: 'Accueil', path: '/' },
-  //{ label: 'Utilisateurs', path: '/users' },
-// ];
+export default UsersPage;

@@ -27,24 +27,22 @@ export const useListBooks = (): UseListBooksProvider => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/books`)
       .then((data) => setBooks(data.data))
-      .catch((err) => console.error('Erreur lors de la récupération des livres:', err));
+      .catch((err) =>
+        console.error('Erreur lors de la récupération des livres:', err),
+      );
   };
 
   return { books, load };
 };
 
 export const useAddBook = (): UseAddBookProvider => {
-  const addBook = (bookData: PlainBookModel) => {
-    return axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, bookData);
-  };
+  const addBook = (bookData: PlainBookModel) => axios.post(`${process.env.NEXT_PUBLIC_API_URL}/books`, bookData);
 
   return { addBook };
 };
 
 export const useDeleteBook = (): UseDeleteBookProvider => {
-  const deleteBook = (id: string) => {
-    return axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`);
-  };
+  const deleteBook = (id: string) => axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`);
 
   return { deleteBook };
 };

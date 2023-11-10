@@ -32,7 +32,7 @@ export class AuthorController {
     return PlainAuthorPresenter.from(author);
   }
 
-  @Post('/create')
+  @Post()
   public async createAuthor(
     @Body() input: createAuthorUseCaseInput,
   ): Promise<PlainAuthorPresenter> {

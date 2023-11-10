@@ -16,7 +16,7 @@ export const adaptBookEntityToBookModel = (
 ): BookRepositoryOutput => ({
   ...book,
   // Check that bookGenres is defined and is an array before mapping
-  genres: Array.isArray(book.bookGenres) 
+  genres: Array.isArray(book.bookGenres)
     ? book.bookGenres.map((bookGenre) => bookGenre.genre)
     : [],
 });

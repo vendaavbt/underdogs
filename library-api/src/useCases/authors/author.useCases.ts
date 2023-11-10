@@ -63,6 +63,6 @@ export class AuthorUseCases {
       return adaptAuthorEntityToPlainAuthorModel(updatedAuthor);
     }
 
-    return undefined; // Gérer le cas où l'auteur n'a pas été trouvé ou la mise à jour a échoué
+    return undefined;
   }
 }
