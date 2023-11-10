@@ -25,7 +25,6 @@ se présenter de la même manière)
  **- Détails d'un livre :**
 1. J’accède à la page de détail d’un livre quand je clique sur l’un dans la liste.
 2. La page de détail contient :
-  a. Le nom de l’auteur avec une photo
   b. Les genres du livres
 3. Je peux supprimer un livre. J’ai une modale de confirmation avant que l’opération
 ne se fasse réellement.
