@@ -2,26 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+    body{
+        background-color: #DFC6B2;
+    }
+    .nav {
+        display: flex;
+        align-items: center; /* Centrer les éléments enfants horizontalement */
+        justify-content: space-between; /* Centrer les éléments enfants verticalement */
+        height: 100px; /* Définir une hauteur si nécessaire */
+        padding: 0 20px;
+        background-color: #431D14;
+    }
+    
+    .title {
+        font-size: 24px; /* Taille de la police correspondant à celle des boutons */
+        color: black; /* Couleur du texte */
+        border: 2px solid black; /* Bordure blanche comme les boutons */
+        border-radius: 5px; /* Bordures arrondies */
+        padding: 10px 20px; /* Padding similaire à celui des boutons pour une cohérence visuelle */
+        background-color: wheat; /* Même couleur de fond que la barre de navigation */
+        text-decoration: none; /* Enlève le soulignement si c'est un lien */
+        font-weight: bold;
+    }
+
+    .title:hover{
+        background-color: #B3533B; /* Changement de couleur au survol */
+        color: #000000; /* Changement de la couleur du texte au survol */
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+    
+    .lien {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    
+    .lien li {
+        margin: 0 10px;
+        padding: 10px 20px;
+        border: 2px solid black; /* Couleur de bordure pour correspondre à votre design */
+        border-radius: 5px;
+        background-color: wheat;
+        transition: background-color 0.3s, color 0.3s;
+        font-weight: bold;
+    }
+    
+    .lien li:hover {
+        background-color: #B3533B; /* Changement de couleur au survol */
+        color: #000000; /* Changement de la couleur du texte au survol */
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+
+    .bg-brown-custom {
+        background-color: #431D14; /* Couleur de fond marron */
+    }
+    

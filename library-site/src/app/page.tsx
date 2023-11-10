@@ -1,9 +1,27 @@
-import { FC, ReactElement } from 'react';
+import Link from 'next/link';
+import './globals.css';
 
-const Home: FC = (): ReactElement => (
-  <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    Home page
-  </main>
-);
-
-export default Home;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export default function Menu() {
+  return (
+    <div className="nav">
+      <Link href="/accueil">
+        <p className="title">UNDERDOGS</p>
+      </Link>
+      <ul className="lien">
+        <li className="">
+          <Link href="/accueil">Accueil</Link>
+        </li>
+        <li className="">
+          <Link href="/authors">Auteurs</Link>
+        </li>
+        <li className="">
+          <Link href="/books">Livres</Link>
+        </li>
+        <li className="">
+          <Link href="/users">Utilisateurs</Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
